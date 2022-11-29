@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,9 +11,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
+import java.security.Timestamp;
 import java.util.Currency;
 
 @Entity
@@ -27,6 +28,9 @@ import java.util.Currency;
 public class Transaction extends BaseEntity {
 
 	@NotNull
+	private Long accountId;
+
+	@NotNull
 	@Enumerated(EnumType.STRING)
 	private TransactionType transactionType;
 
@@ -35,6 +39,10 @@ public class Transaction extends BaseEntity {
 
 	@NotNull
 	private Currency currency;
+
+	@NotNull
+	@CreationTimestamp
+	private Timestamp timestamp;
 
 	@ManyToOne
 	@ToString.Exclude

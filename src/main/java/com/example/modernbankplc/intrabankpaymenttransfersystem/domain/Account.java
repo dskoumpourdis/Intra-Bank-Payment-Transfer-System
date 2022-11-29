@@ -1,5 +1,6 @@
 package com.example.modernbankplc.intrabankpaymenttransfersystem.domain;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
@@ -21,14 +22,14 @@ import javax.validation.constraints.NotNull;
 public class Account extends BaseEntity {
 
 	@NotNull
-	private String accountId;
+	private Long accountId;
 
 	@NotNull
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	private Balance	balance;
 
 	@NotNull
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	private Statement statement;
 
 }

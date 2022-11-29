@@ -1,6 +1,7 @@
 package com.example.modernbankplc.intrabankpaymenttransfersystem.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
@@ -26,7 +27,7 @@ import java.util.Set;
 public class Statement extends BaseEntity {
 
 	@Builder.Default
-	@OneToMany(mappedBy = "statement")
+	@OneToMany(mappedBy = "statement", cascade = CascadeType.ALL)
 	@ToString.Exclude
 	private Set<Transaction> transactions = new HashSet<>();
 
