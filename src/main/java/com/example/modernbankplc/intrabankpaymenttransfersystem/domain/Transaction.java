@@ -37,7 +37,6 @@ public class Transaction extends BaseEntity {
 	private Currency currency;
 
 	@ManyToOne
-	@JoinColumn(name = "fk_statement")
 	@ToString.Exclude
 	@JsonIgnore
 	private Statement statement;
