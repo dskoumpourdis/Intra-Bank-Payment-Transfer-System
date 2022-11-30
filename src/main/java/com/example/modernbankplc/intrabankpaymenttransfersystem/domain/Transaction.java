@@ -15,7 +15,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
-import java.security.Timestamp;
+import java.sql.Timestamp;
 import java.util.Currency;
 
 @Entity
@@ -42,7 +42,7 @@ public class Transaction extends BaseEntity {
 
 	@NotNull
 	@CreationTimestamp
-	private Timestamp timestamp;
+	private Timestamp transactionDate;
 
 	@ManyToOne
 	@ToString.Exclude
