@@ -28,7 +28,7 @@ import java.util.Currency;
 public class Transaction extends BaseEntity {
 
 	@NotNull
-	private Long accountId;
+	private Long accountNum;
 
 	@NotNull
 	@Enumerated(EnumType.STRING)
