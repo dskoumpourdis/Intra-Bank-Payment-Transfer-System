@@ -3,6 +3,7 @@ package com.example.modernbankplc.intrabankpaymenttransfersystem.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
@@ -26,9 +27,8 @@ import java.util.Set;
 
 public class Statement extends BaseEntity {
 
+	@OneToMany(mappedBy = "statement", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@Builder.Default
-	@OneToMany(mappedBy = "statement", cascade = CascadeType.ALL)
-	@ToString.Exclude
 	private Set<Transaction> transactions = new HashSet<>();
 
 	@NotNull
