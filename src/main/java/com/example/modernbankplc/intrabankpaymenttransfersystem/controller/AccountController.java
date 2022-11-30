@@ -3,6 +3,7 @@ package com.example.modernbankplc.intrabankpaymenttransfersystem.controller;
 import com.example.modernbankplc.intrabankpaymenttransfersystem.base.BaseMapper;
 import com.example.modernbankplc.intrabankpaymenttransfersystem.domain.Account;
 import com.example.modernbankplc.intrabankpaymenttransfersystem.exception.InsufficientBalanceException;
+import com.example.modernbankplc.intrabankpaymenttransfersystem.exception.NoSuchAccountException;
 import com.example.modernbankplc.intrabankpaymenttransfersystem.mapper.AccountMapper;
 import com.example.modernbankplc.intrabankpaymenttransfersystem.service.AccountService;
 import com.example.modernbankplc.intrabankpaymenttransfersystem.service.BaseService;
@@ -22,7 +23,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
-import java.util.NoSuchElementException;
 
 @RestController
 @RequiredArgsConstructor
@@ -55,17 +55,14 @@ public class AccountController extends BaseController<Account, AccountResource> 
 	}
 
 	@PostMapping("/makeTransaction")
-	public ResponseEntity<String> makeTransaction(@Valid @RequestBody final MakeTransactionResource makeTransactionResource) {
-		try {
-			accountService.makeTransaction(makeTransactionResource.getDebtorId(),
+	public ResponseEntity<String> makeTransaction(@Valid @RequestBody final MakeTransactionResource makeTransactionResource)
+			throws InsufficientBalanceException, NoSuchAccountException {
+
+		accountService.makeTransaction(makeTransactionResource.getDebtorId(),
 										   makeTransactionResource.getCreditorId(),
 										   makeTransactionResource.getAmount(),
 										   makeTransactionResource.getCurrency());
-		} catch (InsufficientBalanceException e) {
-			return new ResponseEntity<>("Insufficient funds available", HttpStatus.BAD_REQUEST);
-		} catch (NoSuchElementException e) {
-			return new ResponseEntity<>("Invalid account", HttpStatus.BAD_REQUEST);
-		}
+
 		return new ResponseEntity<>("Transaction successful", HttpStatus.OK);
 	}
 }
