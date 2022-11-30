@@ -10,7 +10,7 @@ import lombok.ToString;
 @Setter
 @ToString(callSuper = true)
 public class AccountResource extends BaseResource {
-	private Long accountId;
-	private Balance balance;
-	private Statement statement;
+	private Long accountNum;
+	private BalanceResource balance;
+	private StatementResource statement;
 }
