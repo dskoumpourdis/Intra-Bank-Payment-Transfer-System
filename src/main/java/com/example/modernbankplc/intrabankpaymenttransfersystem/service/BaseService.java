@@ -4,16 +4,16 @@ import com.example.modernbankplc.intrabankpaymenttransfersystem.domain.BaseEntit
 
 import java.util.List;
 
-public interface BaseService<T extends BaseEntity, I> {
+public interface BaseService<T extends BaseEntity, ID> {
 	T create(final T item);
 
 	List<T> createAll(final List<T> items);
 
 	void delete(T item);
 
-	void deleteById(I id);
+	void deleteById(ID id);
 
-	T get(I id);
+	T get(ID id);
 
 	List<T> findAll();
 
