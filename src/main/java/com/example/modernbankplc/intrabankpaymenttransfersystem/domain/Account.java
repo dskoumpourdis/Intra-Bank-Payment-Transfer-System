@@ -22,7 +22,7 @@ import javax.validation.constraints.NotNull;
 public class Account extends BaseEntity {
 
 	@NotNull
-	private Long accountId;
+	private Long accountNum;
 
 	@NotNull
 	@OneToOne(cascade = CascadeType.ALL)

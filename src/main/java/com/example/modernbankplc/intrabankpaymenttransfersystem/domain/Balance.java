@@ -28,6 +28,8 @@ public class Balance extends BaseEntity {
 	@JsonIgnore
 	private Account account;
 
+	private Long accountNum;
+
 	@NotNull
 	private BigDecimal amount;
 
