@@ -34,8 +34,6 @@ public abstract class BaseController<T extends BaseEntity, R extends BaseResourc
 
 	@GetMapping
 	public ResponseEntity<ApiResponse<List<R>>> findAll() {
-		List<T> res = getBaseService().findAll();
-		List<R> test = getMapper().toResources(res);
 		return ResponseEntity.ok(ApiResponse.<List<R>>builder().data(getMapper().toResources(getBaseService().findAll())).build());
 	}
 
