@@ -55,14 +55,14 @@ public class AccountServiceImpl extends BaseServiceImpl<Account> implements Acco
 			accountRepository.save(debtor);
 			accountRepository.save(creditor);
 		} else {
-			throw new InsufficientBalanceException("Insufficient debtor balance");
+			throw new InsufficientBalanceException("Insufficient debtor balance.");
 		}
 	}
 
 	@Override
 	public Set<Transaction> getMiniStatement(final Long id) throws NoSuchAccountException {
 		Account account = accountRepository.findById(id).orElseThrow(
-				() -> new NoSuchAccountException("Invalid account number"));
+				() -> new NoSuchAccountException("Invalid account number."));
 		return account.getStatement()
 					  .getTransactions()
 					  .stream()
