@@ -11,7 +11,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.Comparator;
 import java.util.Currency;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -54,6 +57,18 @@ public class AccountServiceImpl extends BaseServiceImpl<Account> implements Acco
 		} else {
 			throw new InsufficientBalanceException("Insufficient debtor balance");
 		}
+	}
+
+	@Override
+	public Set<Transaction> getMiniStatement(final Long id) throws NoSuchAccountException {
+		Account account = accountRepository.findById(id).orElseThrow(
+				() -> new NoSuchAccountException("Invalid account number"));
+		return account.getStatement()
+					  .getTransactions()
+					  .stream()
+					  .sorted(Comparator.comparing(Transaction::getTransactionDate).reversed())
+					  .limit(20)
+					  .collect(Collectors.toSet());
 	}
 
 }

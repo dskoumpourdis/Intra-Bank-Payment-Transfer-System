@@ -2,6 +2,8 @@ package com.example.modernbankplc.intrabankpaymenttransfersystem.controller;
 
 import com.example.modernbankplc.intrabankpaymenttransfersystem.base.BaseMapper;
 import com.example.modernbankplc.intrabankpaymenttransfersystem.domain.Account;
+import com.example.modernbankplc.intrabankpaymenttransfersystem.domain.Statement;
+import com.example.modernbankplc.intrabankpaymenttransfersystem.domain.Transaction;
 import com.example.modernbankplc.intrabankpaymenttransfersystem.exception.InsufficientBalanceException;
 import com.example.modernbankplc.intrabankpaymenttransfersystem.exception.NoSuchAccountException;
 import com.example.modernbankplc.intrabankpaymenttransfersystem.mapper.AccountMapper;
@@ -23,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.util.Set;
 
 @RestController
 @RequiredArgsConstructor
@@ -54,6 +57,15 @@ public class AccountController extends BaseController<Account, AccountResource> 
 											.build());
 	}
 
+	@GetMapping("/{id}/statements/mini")
+	public ResponseEntity<ApiResponse<StatementResource>> getMiniStatement(@PathVariable("id") final Long id)
+			throws NoSuchAccountException {
+		Set<Transaction> transactions = accountService.getMiniStatement(id);
+		Statement statement = Statement.builder().transactions(transactions).build();
+		Account account = Account.builder().statement(statement).build();
+		return ResponseEntity.ok(ApiResponse.<StatementResource>builder().data(getMapper().toResource(account).getStatement()).build());
+	}
+
 	@PostMapping("/makeTransaction")
 	public ResponseEntity<String> makeTransaction(@Valid @RequestBody final MakeTransactionResource makeTransactionResource)
 			throws InsufficientBalanceException, NoSuchAccountException {
@@ -62,7 +74,7 @@ public class AccountController extends BaseController<Account, AccountResource> 
 										   makeTransactionResource.getCreditorId(),
 										   makeTransactionResource.getAmount(),
 										   makeTransactionResource.getCurrency());
-
+		// TODO: improve return using apiresponse
 		return new ResponseEntity<>("Transaction successful", HttpStatus.OK);
 	}
 }
