@@ -27,7 +27,7 @@ public abstract class BaseController<T extends BaseEntity, R extends BaseResourc
 	protected abstract BaseMapper<T, R> getMapper();
 
 	@GetMapping("/{id}")
-	public ResponseEntity<ApiResponse<R>> get(@PathVariable("id") final Long id) {
+	public ResponseEntity<ApiResponse<R>> find(@PathVariable("id") final Long id) {
 		return ResponseEntity.ok(
 				ApiResponse.<R>builder().data(getMapper().toResource(getBaseService().get(id))).build());
 	}
