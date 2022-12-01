@@ -36,18 +36,18 @@ public class CustomisedExceptionHandler extends BaseComponent {
 	@ExceptionHandler(NoSuchAccountException.class)
 	public final ResponseEntity<ApiResponse<?>> handleAccountNonExistence(final NoSuchAccountException ex,
 																   final WebRequest request) {
-		logger.error("Invalid account number", ex);
+		logger.error("Invalid account number.", ex);
 		return new ResponseEntity<>(ApiResponse.builder().apiError(getApiError(ex, HttpStatus.NOT_FOUND, request,
-																			   "Invalid account number"))
+																			   "Invalid account number."))
 											   .build(), HttpStatus.NOT_FOUND);
 	}
 
 	@ExceptionHandler(InsufficientBalanceException.class)
 	public ResponseEntity<ApiResponse<?>> handleInsufficientBalance(final InsufficientBalanceException ex,
 																	final WebRequest request) {
-		logger.error("Insufficient funds available", ex);
+		logger.error("Insufficient funds available.", ex);
 		return new ResponseEntity<>(ApiResponse.builder().apiError(
-				getApiError(ex, HttpStatus.BAD_REQUEST, request, "Insufficient funds available")).build(),
+				getApiError(ex, HttpStatus.BAD_REQUEST, request, "Insufficient funds available.")).build(),
 									HttpStatus.BAD_REQUEST);
 	}
 
