@@ -7,6 +7,7 @@ import com.example.modernbankplc.intrabankpaymenttransfersystem.domain.Transacti
 import com.example.modernbankplc.intrabankpaymenttransfersystem.exception.InsufficientBalanceException;
 import com.example.modernbankplc.intrabankpaymenttransfersystem.exception.NoSuchAccountException;
 import com.example.modernbankplc.intrabankpaymenttransfersystem.repository.AccountRepository;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -32,6 +33,7 @@ class AccountServiceImplTest {
 	@InjectMocks
 	AccountServiceImpl accountService;
 	@Test
+	@DisplayName("makeTransaction() success")
 	void makeTransaction() {
 		Statement creditorStatement = Statement.builder().build();
 		Statement debtorStatement = Statement.builder().build();
@@ -71,6 +73,7 @@ class AccountServiceImplTest {
 	}
 
 	@Test
+	@DisplayName("makeTransaction() fail NoSuchAccountException")
 	void makeTransaction_NoSuchAccount() {
 
 		assertThrows(
@@ -83,6 +86,7 @@ class AccountServiceImplTest {
 	}
 
 	@Test
+	@DisplayName("makeTransaction() fail InsufficientBalanceException")
 	void makeTransaction_InsufficientBalance() {
 
 		Balance creditorBalance =
@@ -113,6 +117,7 @@ class AccountServiceImplTest {
 	}
 
 	@Test
+	@DisplayName("getMiniStatement() success")
 	void getMiniStatement() {
 		Set<Transaction> initialTransactions = Set.of(
 				Transaction.builder().transactionDate(Timestamp.valueOf("2022-12-01 01:54:10.934")).build(),
@@ -155,6 +160,7 @@ class AccountServiceImplTest {
 	}
 
 	@Test
+	@DisplayName("getMiniStatement() fail NoSuchAccountException")
 	void getMiniStatement_NoSuchAccount() {
 		assertThrows(NoSuchAccountException.class, () -> accountService.getMiniStatement(1L));
 	}

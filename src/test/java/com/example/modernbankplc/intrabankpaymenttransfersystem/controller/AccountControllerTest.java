@@ -12,6 +12,7 @@ import com.example.modernbankplc.intrabankpaymenttransfersystem.transfer.resourc
 import com.example.modernbankplc.intrabankpaymenttransfersystem.transfer.resource.TransactionResource;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hamcrest.Matchers;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +49,7 @@ class AccountControllerTest {
 	MockMvc mockMvc;
 
 	@Test
+	@DisplayName("find() success")
 	void find() throws Exception {
 		AccountResource accountResource = new AccountResource();
 		BalanceResource balanceResource = new BalanceResource();
@@ -73,7 +75,8 @@ class AccountControllerTest {
 	}
 
 	@Test
-	void find_NoSuchAccount() throws Exception {
+	@DisplayName("find() fail with NoSuchElementException")
+	void find_NoSuchElement() throws Exception {
 		when(accountService.get(111L)).thenThrow(new NoSuchElementException());
 
 		mockMvc.perform(get("/accounts/111")).andExpect(status().isNotFound()).andExpect(
@@ -82,6 +85,7 @@ class AccountControllerTest {
 	}
 
 	@Test
+	@DisplayName("findAll() success")
 	void findAll() throws Exception {
 
 		List<Account> accounts = List.of(new Account(), new Account(), new Account());
@@ -108,12 +112,14 @@ class AccountControllerTest {
 	}
 
 	@Test
+	@DisplayName("findAll() success no accounts are found")
 	void findAll_NoAccountsFound() throws Exception {
 		mockMvc.perform(get("/accounts")).andExpect(jsonPath("$.data").exists()).andExpect(
 				jsonPath("$.data").isEmpty());
 	}
 
 	@Test
+	@DisplayName("getBalance() success")
 	void getBalance() throws Exception {
 		AccountResource account = new AccountResource();
 		BalanceResource balanceResource = new BalanceResource();
@@ -130,7 +136,8 @@ class AccountControllerTest {
 	}
 
 	@Test
-	void getBalance_AccountNotFound() throws Exception {
+	@DisplayName("getBalance() fail NoSuchAccountException")
+	void getBalance_NoSuchAccount() throws Exception {
 		when(accountService.get(111L)).thenThrow(new NoSuchAccountException("Invalid account number."));
 
 		mockMvc.perform(get("/accounts/111/balance")).andExpect(status().isNotFound()).andExpect(
@@ -139,6 +146,7 @@ class AccountControllerTest {
 	}
 
 	@Test
+	@DisplayName("getStatement() success")
 	void getStatement() throws Exception {
 		Set<TransactionResource> transactionResources = Set.of(new TransactionResource(), new TransactionResource(),
 															   new TransactionResource(), new TransactionResource(),
@@ -162,6 +170,7 @@ class AccountControllerTest {
 	}
 
 	@Test
+	@DisplayName("getStatement() fail NoSuchAccountException")
 	void getStatement_NoSuchAccount() throws Exception {
 		when(accountService.get(111L)).thenThrow(new NoSuchAccountException("Invalid account number."));
 
@@ -171,6 +180,7 @@ class AccountControllerTest {
 	}
 
 	@Test
+	@DisplayName("getMiniStatement() fail NoSuchAccountException")
 	void getMiniStatement_NoSuchAccount() throws Exception {
 		when(accountService.getMiniStatement(111L)).thenThrow(new NoSuchAccountException("Invalid account number."));
 
@@ -180,6 +190,7 @@ class AccountControllerTest {
 	}
 
 	@Test
+	@DisplayName("getMiniStatement() success")
 	void getMiniStatement() throws Exception {
 		Set<TransactionResource> transactionResources = Set.of(new TransactionResource(), new TransactionResource(),
 															   new TransactionResource(), new TransactionResource(),
@@ -203,6 +214,7 @@ class AccountControllerTest {
 	}
 
 	@Test
+	@DisplayName("makeTransaction() success")
 	void makeTransaction() throws Exception {
 		MakeTransactionResource makeTransactionResource = new MakeTransactionResource();
 
@@ -211,6 +223,7 @@ class AccountControllerTest {
 	}
 
 	@Test
+	@DisplayName("makeTransaction() fail InsufficientBalanceException")
 	void makeTransaction_InsufficientBalance() throws Exception {
 		MakeTransactionResource makeTransactionResource = new MakeTransactionResource();
 
@@ -221,11 +234,13 @@ class AccountControllerTest {
 	}
 
 	@Test
+	@DisplayName("makeTransaction() fail empty request body, server internal error")
 	void makeTransaction_EmptyRequestBody() throws Exception {
 		mockMvc.perform(post("/accounts/makeTransaction")).andExpect(status().isInternalServerError());
 	}
 
 	@Test
+	@DisplayName("makeTransaction() fail NoSuchAccountException")
 	void makeTransaction_NoSuchAccount() throws Exception {
 		MakeTransactionResource makeTransactionResource = new MakeTransactionResource();
 
