@@ -14,6 +14,14 @@ import org.springframework.web.context.request.WebRequest;
 
 import java.util.NoSuchElementException;
 
+/**
+ * Handles the following exceptions:
+ * Exception
+ * NoSuchElementException
+ * NoSuchAccountException
+ * InsufficientBalanceException
+ */
+
 @RestControllerAdvice
 public class CustomisedExceptionHandler extends BaseComponent {
 	@ExceptionHandler(Exception.class)

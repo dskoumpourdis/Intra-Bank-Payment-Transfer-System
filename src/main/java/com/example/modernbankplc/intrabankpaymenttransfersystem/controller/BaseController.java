@@ -12,6 +12,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
+/**
+ *  Simple base controller class. Used as a base class for objects
+ *  that need the following methods. Responses are wrapped within an
+ *  ApiResponse object.
+ * @param <T> Domain
+ * @param <R> Resource
+ */
+
 public abstract class BaseController<T extends BaseEntity, R extends BaseResource> extends BaseComponent {
 	protected abstract BaseService<T, Long> getBaseService();
 

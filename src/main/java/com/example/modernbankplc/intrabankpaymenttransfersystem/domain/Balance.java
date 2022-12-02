@@ -14,6 +14,9 @@ import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.Currency;
 
+/**
+ * Domain class that represents the balance of an account.
+ */
 @Entity
 @Setter
 @Getter

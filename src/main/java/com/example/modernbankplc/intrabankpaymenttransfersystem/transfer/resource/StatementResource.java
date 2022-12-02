@@ -7,6 +7,9 @@ import lombok.ToString;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Simple DTO for Statement objects
+ */
 @Getter
 @Setter
 @ToString(callSuper = true)

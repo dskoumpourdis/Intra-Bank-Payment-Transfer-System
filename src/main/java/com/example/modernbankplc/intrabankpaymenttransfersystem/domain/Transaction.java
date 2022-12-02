@@ -18,6 +18,9 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.Currency;
 
+/**
+ * Domain class that represents a financial transaction.
+ */
 @Entity
 @Setter
 @Getter

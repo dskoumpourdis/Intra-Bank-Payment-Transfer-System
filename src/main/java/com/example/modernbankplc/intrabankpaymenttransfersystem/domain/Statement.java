@@ -17,6 +17,9 @@ import javax.validation.constraints.NotNull;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Domain class that represents the statement of an account.
+ */
 @Entity
 @Setter
 @Getter

@@ -9,6 +9,9 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.Currency;
 
+/**
+ * Simple DTO for Transaction objects
+ */
 @Getter
 @Setter
 @ToString(callSuper = true)

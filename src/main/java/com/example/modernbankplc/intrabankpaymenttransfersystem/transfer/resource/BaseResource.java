@@ -6,6 +6,10 @@ import lombok.ToString;
 
 import java.io.Serializable;
 
+/**
+ *  Simple DTO with an id property. Used as a base class for objects
+ *  that need this property.
+ */
 @Getter
 @Setter
 @ToString(callSuper = true)

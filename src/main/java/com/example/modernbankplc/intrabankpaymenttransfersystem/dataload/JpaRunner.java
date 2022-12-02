@@ -15,6 +15,10 @@ import java.math.BigDecimal;
 import java.util.Currency;
 import java.util.Set;
 
+/**
+* Handles loading initial data in the DB.
+ */
+
 @Component
 @RequiredArgsConstructor
 public class JpaRunner extends BaseComponent implements CommandLineRunner {

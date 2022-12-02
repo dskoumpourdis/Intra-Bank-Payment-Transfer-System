@@ -16,6 +16,13 @@ import java.util.Currency;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+/**
+ * Implementation class of the AccountService interface.
+ * Methods included:
+ * getRepository()
+ * makeTransaction()
+ * getMiniStatement()
+ */
 @Service
 @RequiredArgsConstructor
 public class AccountServiceImpl extends BaseServiceImpl<Account> implements AccountService {
@@ -27,15 +34,27 @@ public class AccountServiceImpl extends BaseServiceImpl<Account> implements Acco
 		return accountRepository;
 	}
 
+	/**
+	 * Makes a transaction between the 2 accounts specified. The statement of each account is then updated
+	 * with a transaction.
+	 * @param debtorId
+	 * @param creditorId
+	 * @param amount
+	 * @param currency
+	 * @throws InsufficientBalanceException if the debtor account does not have sufficient balance
+	 * @throws NoSuchAccountException if any of the two accounts are invalid
+	 */
 	@Override
 	public void makeTransaction(final Long debtorId, final Long creditorId, final BigDecimal amount,
 								final Currency currency)
 			throws InsufficientBalanceException, NoSuchAccountException {
+		// Check if both accounts are valid
 		Account debtor = accountRepository.findById(debtorId).orElseThrow(
 				() -> new NoSuchAccountException("Invalid account number"));
 		Account creditor = accountRepository.findById(creditorId).orElseThrow(
 				() -> new NoSuchAccountException("Invalid account number"));
 		BigDecimal remainder = debtor.getBalance().getAmount().subtract(amount);
+		// Check if the debtor account has sufficient balance
 		if (remainder.compareTo(BigDecimal.ZERO) >= 0) {
 			// Deduct the amount from the debtor
 			debtor.getBalance().setAmount(remainder);
@@ -59,6 +78,12 @@ public class AccountServiceImpl extends BaseServiceImpl<Account> implements Acco
 		}
 	}
 
+	/**
+	 * Returns the 20 latest transactions of an account
+	 * @param id account id
+	 * @return Set of 20 latest transactions
+	 * @throws NoSuchAccountException if the account is invalid
+	 */
 	@Override
 	public Set<Transaction> getMiniStatement(final Long id) throws NoSuchAccountException {
 		Account account = accountRepository.findById(id).orElseThrow(

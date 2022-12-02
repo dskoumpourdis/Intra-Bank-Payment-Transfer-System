@@ -27,6 +27,10 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 import java.util.Set;
 
+/**
+ * Controller class that handles the requests under the /accounts endpoint
+ */
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/accounts")
@@ -45,18 +49,31 @@ public class AccountController extends BaseController<Account, AccountResource> 
 		return accountMapper;
 	}
 
+	/**
+	 * @param id account id
+	 * @return the balance of the account with the specified id
+	 */
 	@GetMapping("/{id}/balance")
 	public ResponseEntity<ApiResponse<BalanceResource>> getBalance(@PathVariable("id") final Long id) {
 		return ResponseEntity.ok(ApiResponse.<BalanceResource>builder().data(getMapper().toResource(getBaseService().get(id)).getBalance())
 											.build());
 	}
 
+	/**
+	 * @param id account id
+	 * @return the statement of the account with the specified id
+	 */
 	@GetMapping("/{id}/statements")
 	public ResponseEntity<ApiResponse<StatementResource>> getStatement(@PathVariable("id") final Long id) {
 		return ResponseEntity.ok(ApiResponse.<StatementResource>builder().data(getMapper().toResource(getBaseService().get(id)).getStatement())
 											.build());
 	}
 
+	/**
+	 * @param id account id
+	 * @return the statement with the 20 latest transactions of the account with the speficied id
+	 * @throws NoSuchAccountException
+	 */
 	@GetMapping("/{id}/statements/mini")
 	public ResponseEntity<ApiResponse<StatementResource>> getMiniStatement(@PathVariable("id") final Long id)
 			throws NoSuchAccountException {
@@ -66,6 +83,12 @@ public class AccountController extends BaseController<Account, AccountResource> 
 		return ResponseEntity.ok(ApiResponse.<StatementResource>builder().data(getMapper().toResource(account).getStatement()).build());
 	}
 
+	/**
+	 * @param makeTransactionResource
+	 * @return 200 OK
+	 * @throws InsufficientBalanceException if the debtor account does not have sufficient balance
+	 * @throws NoSuchAccountException if any of the two accounts are invalid
+	 */
 	@PostMapping("/makeTransaction")
 	public ResponseEntity<String> makeTransaction(@Valid @RequestBody final MakeTransactionResource makeTransactionResource)
 			throws InsufficientBalanceException, NoSuchAccountException {

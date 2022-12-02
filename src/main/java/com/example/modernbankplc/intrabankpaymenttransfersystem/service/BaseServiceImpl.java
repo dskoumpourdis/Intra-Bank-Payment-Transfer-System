@@ -9,10 +9,19 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+/**
+ * Implementation class of the BaseService interface that can be extended by other classes to obtain the following
+ * methods:
+ * create()
+ * get()
+ * findAll()
+ */
 @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED, rollbackFor = Exception.class)
 public abstract class BaseServiceImpl<T extends BaseEntity> extends BaseComponent implements BaseService<T, Long> {
+	// Returns a repository of type T
 	public abstract JpaRepository<T, Long> getRepository();
 
+	// Saves in the database an object of type T
 	@Override
 	public T create(final T item) {
 		T savedItem = getRepository().save(item);
@@ -20,6 +29,7 @@ public abstract class BaseServiceImpl<T extends BaseEntity> extends BaseComponen
 		return savedItem;
 	}
 
+	// Retrieves from the database an object of type T by id
 	@Override
 	public T get(final Long id) {
 		T item = getRepository().findById(id).orElseThrow();
@@ -27,6 +37,7 @@ public abstract class BaseServiceImpl<T extends BaseEntity> extends BaseComponen
 		return item;
 	}
 
+	// Retrieves all objects from the database of type T
 	@Override
 	public List<T> findAll() {
 		List<T> itemsFound = getRepository().findAll();

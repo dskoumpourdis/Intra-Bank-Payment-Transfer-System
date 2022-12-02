@@ -12,6 +12,9 @@ import lombok.ToString;
 
 import javax.validation.constraints.NotNull;
 
+/**
+ * Domain class that represents an account.
+ */
 @Entity
 @Setter
 @Getter

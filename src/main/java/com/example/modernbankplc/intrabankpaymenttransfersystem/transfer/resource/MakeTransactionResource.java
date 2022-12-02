@@ -7,6 +7,9 @@ import lombok.ToString;
 import java.math.BigDecimal;
 import java.util.Currency;
 
+/**
+ * DTO which allows making transactions between 2 accounts.
+ */
 @Getter
 @Setter
 @ToString(callSuper = true)

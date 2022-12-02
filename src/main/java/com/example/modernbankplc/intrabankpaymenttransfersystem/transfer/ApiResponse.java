@@ -8,6 +8,11 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+/**
+ * Wrapper class for controller response
+ * @param <T> type
+ */
+
 @Value
 @Builder
 public class ApiResponse<T> implements Serializable {

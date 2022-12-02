@@ -4,6 +4,9 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+/**
+ * Simple DTO for Account objects
+ */
 @Getter
 @Setter
 @ToString(callSuper = true)

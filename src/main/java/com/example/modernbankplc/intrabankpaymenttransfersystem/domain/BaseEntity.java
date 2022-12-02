@@ -12,6 +12,10 @@ import lombok.ToString;
 import java.io.Serial;
 import java.io.Serializable;
 
+/**
+ *  Simple domain class with an id property. Used as a base class for objects
+ *  that need this property.
+ */
 @MappedSuperclass
 @Setter
 @Getter
